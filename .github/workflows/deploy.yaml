@@ -18,11 +18,11 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: us-east-1
 
-    - name: Sync site to S3
+    - name: Sync to S3
       run: aws s3 sync . s3://smart-static-site-maurice --delete
 
     - name: Invalidate CloudFront cache
       run: |
         aws cloudfront create-invalidation \
-          --distribution-id E25184O5CDYONO \
+          --distribution-id ${{ secrets.DISTRIBUTION_ID }} \
           --paths "/*"
